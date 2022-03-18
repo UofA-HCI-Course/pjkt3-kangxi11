@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/cmput302-synthesizer/static/css/main.073c9b0a.css",
+    "main.js": "/cmput302-synthesizer/static/js/main.128792c6.js",
+    "static/js/787.d7bd18e4.chunk.js": "/cmput302-synthesizer/static/js/787.d7bd18e4.chunk.js",
+    "static/media/logo.svg": "/cmput302-synthesizer/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/cmput302-synthesizer/index.html",
+    "main.073c9b0a.css.map": "/cmput302-synthesizer/static/css/main.073c9b0a.css.map",
+    "main.128792c6.js.map": "/cmput302-synthesizer/static/js/main.128792c6.js.map",
+    "787.d7bd18e4.chunk.js.map": "/cmput302-synthesizer/static/js/787.d7bd18e4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.128792c6.js"
+  ]
+}
