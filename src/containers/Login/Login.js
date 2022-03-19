@@ -9,7 +9,7 @@ export default function Login() {
     let navigate = useNavigate();
 
     const onLoginClicked = () => {
-        navigate("/home");
+        navigate("/pjkt3-kangxi11/home");
     }
     
     return (
@@ -39,7 +39,7 @@ export default function Login() {
                     margin="normal" 
                 />
                 <div className="link">
-                    <a href="/signup" >
+                    <a href="/pjkt3-kangxi11/signup" >
                         {"Don't have an account? Sign Up"}
                     </a>
                     <br/>

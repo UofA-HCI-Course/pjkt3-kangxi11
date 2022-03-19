@@ -9,7 +9,7 @@ export default function Signup() {
     let navigate = useNavigate();
 
     const onSignupClicked = () => {
-        navigate("/login");
+        navigate("/pjkt3-kangxi11/login");
     }
     
     return (
@@ -50,7 +50,7 @@ export default function Signup() {
                     />
                 </div>
                 <div className="link">
-                    <a href="/login" >
+                    <a href="/pjkt3-kangxi11/login" >
                         {"Already have an account? Login"}
                     </a>
                     <br/>
