@@ -1,0 +1,58 @@
+
+.login-container, .signup-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    font-family: 'Roboto';
+}
+
+.account-info {
+    text-align: center;
+}
+
+.app-wrapper {
+    background-color: #fff;
+    min-width: 500px;
+    min-height: 650px;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.title{
+    color: black;
+    text-align: center;
+    margin: 1.5rem 0;
+    font-family: 'Roboto';
+}
+
+.link {
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.input {
+    font-size: 20px;
+    width: 100%;
+    border: purple;
+}
+
+
+.submit-button {
+    display: flex;
+    font-size: 1rem;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 20px;
+    background: #653694;
+    margin:auto;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: 'Roboto';
+    margin-bottom: 1rem;
+}
