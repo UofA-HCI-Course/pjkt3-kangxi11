@@ -15,12 +15,12 @@ import Document from './containers/Document/Document';
 function App() {
   return (
 	<Routes>
-		<Route exact path="/pjkt3-kangxi11/login" element={<Login/>}/>
-		<Route exact path="/pjkt3-kangxi11/signup" element={<Signup/>}/>
-		<Route exact path="/pjkt3-kangxi11/home" element={<Home/>}/>
-		<Route exact path="/pjkt3-kangxi11/document" element={<Document/>}/>
+		<Route path="/pjkt3-kangxi11/login" element={<Login/>}/>
+		<Route path="/pjkt3-kangxi11/signup" element={<Signup/>}/>
+		<Route path="/pjkt3-kangxi11/home" element={<Home/>}/>
+		<Route path="/pjkt3-kangxi11/document" element={<Document/>}/>
 		<Route
-			path="/pjkt3-kangxi11/"
+			path="/pjkt3-kangxi11"
 			element={<Navigate to="/pjkt3-kangxi11/login" replace />}
 		/>
 	</Routes>

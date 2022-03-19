@@ -11,6 +11,10 @@ export default function Login() {
     const onLoginClicked = () => {
         navigate("/pjkt3-kangxi11/home");
     }
+
+    const onSignupClicked = () => {
+        navigate("/pjkt3-kangxi11/signup");
+    }
     
     return (
         <div className="login-container">
@@ -38,11 +42,8 @@ export default function Login() {
                     variant="standard"
                     margin="normal" 
                 />
-                <div className="link">
-                    <a href="/pjkt3-kangxi11/signup" >
-                        {"Don't have an account? Sign Up"}
-                    </a>
-                    <br/>
+                <div className="link" onClick={onSignupClicked}>
+                    {"Don't have an account? Sign Up"}
                 </div>
                 <div>
                     <button className="submit-button" onClick={onLoginClicked}>Login</button>

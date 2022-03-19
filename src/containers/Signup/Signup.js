@@ -49,11 +49,8 @@ export default function Signup() {
                         margin="normal" 
                     />
                 </div>
-                <div className="link">
-                    <a href="/pjkt3-kangxi11/login" >
-                        {"Already have an account? Login"}
-                    </a>
-                    <br/>
+                <div className="link" onClick={onSignupClicked}>
+                    {"Already have an account? Login"}
                 </div>
                 <div>
                     <button className="submit-button" onClick={onSignupClicked}>Sign Up</button>

@@ -1,7 +1,7 @@
 {
   "name": "synthesizer",
   "version": "0.1.0",
-  "homepage": "https://UofA-HCI-Course.github.io/pjkt3-kangxi11",
+  "homepage": "https://uofa-hci-course.github.io/pjkt3-kangxi11/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.2",
