@@ -1,0 +1,33 @@
+.home-root {
+    height: 100%;
+}
+
+.home-left {
+    width: 400px;
+    background-color: rgba(82, 147, 250, 0.5);
+    height: 100vh;
+}
+
+.logo-text {
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    padding-top: 80px;
+    font-size: 60px;
+}
+
+.home-menu-item {
+    margin-bottom: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.home-menu-item:hover {
+    background-color: rgba(82, 147, 250, 0.9);
+}
+
+.home-menu-item-selected {
+    background-color: rgba(82, 147, 250, 0.9);
+}
