@@ -25,18 +25,22 @@ export default function Home() {
     setSelected("cloud");
   }
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }  
+  function createData(title, subtitle, dateViewed) {
+    return { title, subtitle, dateViewed };
+  }
 
   const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020'),
+    createData('A Brave New World', 'Book', '01/01/2020')
   ];  
-  
+
   const onSettingsClicked = () => {
     navigate("/pjkt3-kangxi11/login");
   }
@@ -44,6 +48,12 @@ export default function Home() {
   const onLogoutClicked = () => {
     navigate("/pjkt3-kangxi11/login");
   }
+
+  const columns = [
+    { id: 'title', label: 'Title', minWidth: 170 },
+    { id: 'subtitle', label: 'Subtitle', minWidth: 100 },
+    { id: 'dateViewed', label: 'Date Viewed', minWidth: 100 }
+  ];
 
   return (
     <div className="home-root">
@@ -70,32 +80,39 @@ export default function Home() {
       </div>
       <div className="home-right">
         <Input placeholder="Search" fullWidth/>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                </TableRow>
-              ))}
+              {rows
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
