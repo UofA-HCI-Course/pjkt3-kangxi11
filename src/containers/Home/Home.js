@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import Input from '@mui/material/Input';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,8 +7,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useNavigate } from "react-router-dom";
 
 import './Home.css';
 
@@ -39,7 +38,7 @@ export default function Home() {
     createData('A Brave New World', 'Book', '01/01/2020'),
     createData('A Brave New World', 'Book', '01/01/2020'),
     createData('A Brave New World', 'Book', '01/01/2020')
-  ];  
+  ];
 
   const onSettingsClicked = () => {
     navigate("/pjkt3-kangxi11/login");
@@ -54,6 +53,11 @@ export default function Home() {
     { id: 'subtitle', label: 'Subtitle', minWidth: 100 },
     { id: 'dateViewed', label: 'Date Viewed', minWidth: 100 }
   ];
+
+  const onRowClicked = (row) => {
+    console.log(rows[row]);
+    navigate("/pjkt3-kangxi11/document");
+  }
 
   return (
     <div className="home-root">
@@ -97,9 +101,9 @@ export default function Home() {
             </TableHead>
             <TableBody>
               {rows
-                .map((row) => {
+                .map((row, i) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={i} onClick={() => onRowClicked(i)}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (

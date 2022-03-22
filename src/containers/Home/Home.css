@@ -4,6 +4,7 @@
 
 .home-left {
     width: 400px;
+    min-width: 400px;
     background-color: rgba(82, 147, 250, 0.5);
     height: 100vh;
 }
