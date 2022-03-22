@@ -18,6 +18,13 @@ export default function Home() {
   let navigate = useNavigate();
 
   const [selected, setSelected] = useState("documents");
+  const [nodeDataArray, setNodeDataArray] = useState([
+          { key: 0, text: 'Biology', color: 'lightblue'},
+          { key: 1, text: 'Neuroscience', color: 'lightblue'},
+          { key: 2, text: 'Biochemistry', color: 'lightblue'},
+          { key: 3, text: 'Muscular System', color: 'lightblue'}
+        ]);
+  const [linkDataArray, setLinkDataArray] = useState();
 
   const onDocumentsClicked = () => {
     setSelected("documents");
@@ -58,7 +65,6 @@ export default function Home() {
   ];
 
   const onRowClicked = (row) => {
-    console.log(rows[row]);
     navigate("/pjkt3-kangxi11/document");
   }
 
@@ -73,23 +79,41 @@ export default function Home() {
           'clickCreatingTool.archetypeNodeData': { text: 'new node', color: 'lightblue' },
           model: new go.GraphLinksModel(
             {
-              linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
+              linkKeyProperty: 'key'
             })
         });
   
     // define a simple Node template
     diagram.nodeTemplate =
-      $(go.Node, 'Auto',  // the Shape will go around the TextBlock
-        new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
-        $(go.Shape, 'RoundedRectangle',
-          { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
-          // Shape.fill is bound to Node.data.color
-          new go.Binding('fill', 'color')),
+      $(go.Node, "Auto",
+        $(go.Shape, "Rectangle",
+          {
+            stroke: null,
+            portId: "",
+            cursor: "pointer",
+            fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
+            toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
+          },
+          new go.Binding("fill", "color")),
         $(go.TextBlock,
-          { margin: 8, editable: true },  // some room around the text
-          new go.Binding('text').makeTwoWay()
-        )
+          { margin: 6, font: "18px sans-serif" },
+          new go.Binding("text"))
       );
+    
+    diagram.linkTemplate =
+      $(go.Link,
+        {
+          // allow the user to reconnnect existing links:
+          relinkableFrom: true, relinkableTo: true,
+          // draw the link path shorter than normal,
+          // so that it does not interfere with the appearance of the arrowhead
+          toShortLength: 2
+        },
+        $(go.Shape,
+          { strokeWidth: 2 }),
+        $(go.Shape,
+          { toArrow: "Standard", stroke: null })
+      );    
   
     return diagram;
   }  
@@ -163,19 +187,8 @@ export default function Home() {
                 <ReactDiagram
                   initDiagram={initDiagram}
                   divClassName='diagram-component'
-                  nodeDataArray={[
-                    { key: 0, text: 'Alpha', color: 'lightblue', loc: '0 0' },
-                    { key: 1, text: 'Beta', color: 'orange', loc: '150 0' },
-                    { key: 2, text: 'Gamma', color: 'lightgreen', loc: '0 150' },
-                    { key: 3, text: 'Delta', color: 'pink', loc: '150 150' }
-                  ]}
-                  linkDataArray={[
-                    { key: -1, from: 0, to: 1 },
-                    { key: -2, from: 0, to: 2 },
-                    { key: -3, from: 1, to: 1 },
-                    { key: -4, from: 2, to: 3 },
-                    { key: -5, from: 3, to: 0 }
-                  ]}
+                  nodeDataArray={nodeDataArray}
+                  linkDataArray={linkDataArray}
                   onModelChange={() => {}}
                 />
             </div>
