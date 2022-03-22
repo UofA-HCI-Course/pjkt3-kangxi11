@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 
 import './Home.css';
 
 export default function Home() {
+
+  let navigate = useNavigate();
 
   const [selected, setSelected] = useState("documents");
 
@@ -12,6 +15,14 @@ export default function Home() {
 
   const onCloudClicked = () => {
     setSelected("cloud");
+  }
+
+  const onSettingsClicked = () => {
+    navigate("/pjkt3-kangxi11/login");
+  }
+
+  const onLogoutClicked = () => {
+    navigate("/pjkt3-kangxi11/login");
   }
 
   return (
@@ -29,6 +40,12 @@ export default function Home() {
           onClick={onCloudClicked}
         >
           Word Cloud
+        </div>
+        <div>
+          <button className="settings-button" onClick={onSettingsClicked}>Settings</button>
+        </div>
+        <div>
+          <button className="logout-button" onClick={onLogoutClicked}>Logout</button>
         </div>
       </div>
     </div>
