@@ -38,3 +38,43 @@
 .home-menu-item-selected {
     background-color: rgba(82, 147, 250, 0.9);
 }
+
+.settings-button {
+    position: absolute;
+    left: 0;
+    bottom: 45px;
+    display: flex;
+    font-size: 1rem;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 20px;
+    background: #944c36;
+    margin:auto;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: 'Roboto';
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+
+.logout-button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    font-size: 1rem;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 20px;
+    background: #944c36;
+    margin:auto;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: 'Roboto';
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}

@@ -7,10 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useNavigate } from "react-router-dom";
 
 import './Home.css';
 
 export default function Home() {
+
+  let navigate = useNavigate();
 
   const [selected, setSelected] = useState("documents");
 
@@ -33,6 +36,14 @@ export default function Home() {
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];  
+  
+  const onSettingsClicked = () => {
+    navigate("/pjkt3-kangxi11/login");
+  }
+
+  const onLogoutClicked = () => {
+    navigate("/pjkt3-kangxi11/login");
+  }
 
   return (
     <div className="home-root">
@@ -49,6 +60,12 @@ export default function Home() {
           onClick={onCloudClicked}
         >
           Word Cloud
+        </div>
+        <div>
+          <button className="settings-button" onClick={onSettingsClicked}>Settings</button>
+        </div>
+        <div>
+          <button className="logout-button" onClick={onLogoutClicked}>Logout</button>
         </div>
       </div>
       <div className="home-right">
