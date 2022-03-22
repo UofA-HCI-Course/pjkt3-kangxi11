@@ -112,7 +112,24 @@ export default function Home() {
         $(go.Shape,
           { strokeWidth: 2 }),
         $(go.Shape,
-          { toArrow: "Standard", stroke: null })
+          { toArrow: "Standard", stroke: null }),
+        $(go.Panel, "Auto",
+          $(go.Shape,  // the label background, which becomes transparent around the edges
+            {
+              fill: "white",
+              stroke: null
+            }),
+          $(go.TextBlock, "transition",  // the label text
+            {
+              textAlign: "center",
+              font: "9pt helvetica, arial, sans-serif",
+              width: 100,
+              margin: 4,
+              editable: true  // enable in-place editing
+            },
+            // editing the text automatically updates the model data
+            new go.Binding("text").makeTwoWay())
+        )
       );    
   
     return diagram;
