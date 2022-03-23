@@ -13,7 +13,7 @@ export default function Summary() {
 
     return (
         <div>
-            <Typography variant="body">{text}</Typography>
+            <p>{text}</p>
         </div>
     )
 }

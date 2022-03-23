@@ -73,7 +73,7 @@ export default function Document() {
         <Divider style={{ marginBlock: '16px' }} />
 
         {selected === "text" && <Text />}
-        {selected === "glossary" && <Glossary/>}
+        {selected === "glossary" && <Glossary onClick={onTextClicked} />}
         {selected === "summary" && <Summary />}
       </div>
     </div>
