@@ -1,4 +1,5 @@
-import { Button, Divider, Typography } from '@mui/material';
+import { HelpOutline } from '@mui/icons-material';
+import { Button, Divider, Typography, Grid, Icon, Tooltip } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import Highlighter from "react-highlight-words";
 import {book} from './book';
@@ -50,28 +51,45 @@ export default function Text() {
     }
 
     return (
-        <div>
 
-            <Button variant="contained" color="primary" style={{ marginBottom: '16px' }} onClick={() => {
-                if (isLiveRead) {
-                    setIsLiveRead(false);
-                } else {
-                    setIsLiveRead(true);
-                }
-            }}>
-                { isLiveRead ? 'Stop Live Read' : 'Start Live Read' }
-            </Button>
+        <Grid container direction="column" spacing={2}>
+            <Grid item xs={1}>
 
-            <div/>
 
-            <Highlighter
-                searchWords={searchWords}
-                autoEscape={true}
-                textToHighlight={text}
-                highlightStyle={{ whiteSpace: 'pre-wrap' }}
-                unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
-            />
-        </div>
+                <Grid container direction="row" alignItems="center" spacing={1}>
+                    <Grid item>
+                        <Button variant="contained" color="primary" onClick={() => {
+                            if (isLiveRead) {
+                                setIsLiveRead(false);
+                            } else {
+                                setIsLiveRead(true);
+                            }
+                        }}>
+                            { isLiveRead ? 'Stop Live Read' : 'Start Live Read' }
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Tooltip title="Live Read lets the document follow along as you read. Each word you read outloud, will be highlighted to help track your progress.">
+
+                            <HelpOutline fontSize="small" />
+                        </Tooltip>
+                    </Grid>
+                </Grid>
+                
+            </Grid>
+
+            <Grid item xs>
+
+                <Highlighter
+                    searchWords={searchWords}
+                    autoEscape={true}
+                    textToHighlight={text}
+                    highlightStyle={{ whiteSpace: 'pre-wrap' }}
+                    unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
+                />
+            </Grid>
+
+        </Grid>
     )
 
 }
