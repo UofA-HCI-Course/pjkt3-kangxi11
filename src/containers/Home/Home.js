@@ -239,13 +239,6 @@ export default function Home() {
                   </SpeedDial>
                 </div>
             : <div>
-                <ReactDiagram
-                  initDiagram={initDiagram}
-                  divClassName='diagram-component'
-                  nodeDataArray={nodeDataArray}
-                  linkDataArray={linkDataArray}
-                  onModelChange={modelChanged}
-                />
                 <p>
                   Click and drag nodes to move
                 </p>
@@ -255,6 +248,13 @@ export default function Home() {
                 <p>
                   Double click a link's text to modify
                 </p>
+                <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName='diagram-component'
+                  nodeDataArray={nodeDataArray}
+                  linkDataArray={linkDataArray}
+                  onModelChange={modelChanged}
+                />
             </div>
         }
       </div>
