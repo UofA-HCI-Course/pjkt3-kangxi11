@@ -19,12 +19,22 @@ export default function Home() {
 
   const [selected, setSelected] = useState("documents");
   const [nodeDataArray, setNodeDataArray] = useState([
-          { key: 0, text: 'Biology', color: 'lightblue'},
-          { key: 1, text: 'Neuroscience', color: 'lightblue'},
-          { key: 2, text: 'Biochemistry', color: 'lightblue'},
-          { key: 3, text: 'Muscular System', color: 'lightblue'}
-        ]);
-  const [linkDataArray, setLinkDataArray] = useState();
+    { key: 0, text: 'A Brave New World', color: 'lightblue', loc: '-100 -300'},
+    { key: 1, text: 'Criminology', color: 'lightblue', loc: '150 -100'},
+    { key: 2, text: 'Social Psychology', color: 'lightblue', loc: '100 100'},
+    { key: 3, text: '20th Century Witchcraft', color: 'lightblue', loc: '200 300'},
+    { key: 4, text: 'String Theories', color: 'lightblue', loc: '400 -200'},
+    { key: 5, text: 'Crime and Society', color: 'lightblue', loc: '400 50'},
+    { key: 6, text: 'Correlates of Crime', color: 'lightblue', loc: '50 400'}
+  ]);
+  const [linkDataArray, setLinkDataArray] = useState([
+    { key: -1, from: 4, to: 1, text: 'Crime is caused by strains in society between groups'},
+    { key: -2, from: 5, to: 1, text: 'Explanations on how society produces crime' },
+    { key: -3, from: 2, to: 1, text: 'Social explanations on the cause of crime' },
+    { key: -4, from: 0, to: 1, text: 'Novel on dystopian future and its evolution on crime' },
+    { key: -5, from: 3, to: 5, text: 'Crime is explained by supernatural forces' },
+    { key: -6, from: 3, to: 2, text: 'Social stigmas create widespread fear' },
+  ]);
 
   const onDocumentsClicked = () => {
     setSelected("documents");
@@ -39,15 +49,13 @@ export default function Home() {
   }
 
   const rows = [
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020'),
-    createData('A Brave New World', 'Book', '01/01/2020')
+    createData('Correlates of Crime', 'Criminology', '23/03/2022'),
+    createData('A Brave New World', '', '20/03/2022'),
+    createData('Criminology', 'A Canadian Perspective', '19/03/2022'),
+    createData('Social Psychology', 'Individual & Social Behavior', '26/02/2022'),
+    createData('20th Century Witchcraft', 'Sociology', '15/02/2022'),
+    createData('String Theories', 'Criminology', '14/02/2022'),
+    createData('Crime and Society', 'Criminology', '14/02/2022')
   ];
 
   const onSettingsClicked = () => {
@@ -68,6 +76,10 @@ export default function Home() {
     navigate("/pjkt3-kangxi11/document");
   }
 
+  const modelChanged = (e) => {
+    console.log(e);
+  }
+  
   function initDiagram() {
     const $ = go.GraphObject.make;
     // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
@@ -86,6 +98,7 @@ export default function Home() {
     // define a simple Node template
     diagram.nodeTemplate =
       $(go.Node, "Auto",
+        new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Shape, "Rectangle",
           {
             stroke: null,
@@ -130,7 +143,7 @@ export default function Home() {
             // editing the text automatically updates the model data
             new go.Binding("text").makeTwoWay())
         )
-      );    
+      );
   
     return diagram;
   }  
@@ -206,8 +219,17 @@ export default function Home() {
                   divClassName='diagram-component'
                   nodeDataArray={nodeDataArray}
                   linkDataArray={linkDataArray}
-                  onModelChange={() => {}}
+                  onModelChange={modelChanged}
                 />
+                <p>
+                  Click and drag nodes to move
+                </p>
+                <p>
+                  Click and drag from the edge of a node to another node to create a new link
+                </p>
+                <p>
+                  Double click a link's text to modify
+                </p>
             </div>
         }
       </div>
