@@ -67,7 +67,7 @@ export default function Document() {
           Title
         </Typography>
         <Typography variant="h4">
-          Wealth of Nations
+          Correlates of Crime
         </Typography>
 
         <Divider style={{ marginBlock: '16px' }} />
