@@ -1,7 +1,11 @@
+import { Divider, Typography } from '@mui/material';
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 
 import './Document.css';
+import Glossary from './Glossary/Glossary';
+import Summary from './Summary/Summary';
+import Text from './Text/Text';
 
 export default function Document() {
 
@@ -56,6 +60,21 @@ export default function Document() {
         <div>
           <button className="home-button" onClick={onHomeClicked}>Home</button>
       </div>
+      </div>
+
+      <div className="document-right">
+        <Typography variant="h6">
+          Title
+        </Typography>
+        <Typography variant="h4">
+          Wealth of Nations
+        </Typography>
+
+        <Divider style={{ marginBlock: '16px' }} />
+
+        {selected === "text" && <Text />}
+        {selected === "glossary" && <Glossary/>}
+        {selected === "summary" && <Summary />}
       </div>
     </div>
   )
