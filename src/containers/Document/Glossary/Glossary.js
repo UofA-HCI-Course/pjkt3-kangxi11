@@ -1,7 +1,9 @@
 import { Button, Divider, Typography } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 
-export default function Glossary() {
+import './Glossary.css';
+
+export default function Glossary(props) {
 
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -12,10 +14,8 @@ export default function Glossary() {
                     <Typography variant="h6">{letter}</Typography>
                     <Divider />
                     <div>
-                        <Typography variant="body1">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Donec euismod, nisi eu aliquam consectetur, nisl nisl
-                            aliquet nisl, eu porttitor nisl nisl eu nisl.
+                        <Typography variant="body1" className="glossary-item" onClick={props.onClick}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         </Typography>
                     </div>
                 </div>
