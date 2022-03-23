@@ -7,6 +7,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
 
 import * as go from 'gojs';
 import { ReactDiagram } from 'gojs-react';
@@ -148,6 +155,10 @@ export default function Home() {
     return diagram;
   }  
 
+  const actions = [
+    { icon: <SaveIcon />, name: 'Import' },
+  ];  
+
   return (
     <div className="home-root">
       <div className="home-left">
@@ -165,7 +176,7 @@ export default function Home() {
           Word Cloud
         </div>
         <div>
-          <button className="settings-button" onClick={onSettingsClicked}>Settings</button>
+          {/* <button className="settings-button" onClick={onSettingsClicked}>Settings</button> */}
         </div>
         <div>
           <button className="logout-button" onClick={onLogoutClicked}>Logout</button>
@@ -212,6 +223,20 @@ export default function Home() {
                       </TableBody>
                     </Table>
                   </TableContainer>
+                  <SpeedDial
+                    ariaLabel="Add New Document"
+                    sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                    icon={<SpeedDialIcon />}
+                  >
+                    {actions.map((action) => (
+                      <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                        onClick={onRowClicked}
+                      />
+                    ))}
+                  </SpeedDial>
                 </div>
             : <div>
                 <ReactDiagram
