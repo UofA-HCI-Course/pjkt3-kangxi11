@@ -9,14 +9,13 @@ import Highlighter from "react-highlight-words";
 import {book} from './book';
 import './Text.css';
 
-export default function Text() {
+export default function Text(props) {
 
     const [isLiveRead, setIsLiveRead] = useState(false);
     const [text, setText] = useState('');
     const [searchWords, setSearchWords] = useState([]);
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [bookmarks, setBookmarks] = useState([]);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -82,7 +81,7 @@ export default function Text() {
     };
 
     const onBookmarkClicked = () => {
-        setBookmarks(bookmarks.concat([window.getSelection().toString()]));
+        props.setBookmarks(props.bookmarks.concat([window.getSelection().toString()]));
         handleClose();
     }
 
@@ -141,7 +140,7 @@ export default function Text() {
             <Grid item xs className="text-right">
                 <div onMouseLeave={handleClose}>
                     <Highlighter
-                        searchWords={bookmarks.concat(searchWords)}
+                        searchWords={props.bookmarks.concat(searchWords)}
                         autoEscape={true}
                         textToHighlight={text}
                         highlightStyle={{ whiteSpace: 'pre-wrap' }}
