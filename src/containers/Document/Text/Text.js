@@ -2,6 +2,7 @@ import { HelpOutline } from '@mui/icons-material';
 import { Button, Divider, Typography, Grid, Icon, Tooltip } from '@mui/material';
 import Popper from '@mui/material/Popper';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import React, {useEffect, useState} from 'react';
@@ -16,6 +17,8 @@ export default function Text(props) {
     const [searchWords, setSearchWords] = useState([]);
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [dictionaryOpen, setDictionaryOpen] = useState(false);
+    const [dictionaryAnchorEl, setDictionaryAnchorEl] = useState(null);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -62,6 +65,15 @@ export default function Text(props) {
         setOpen(false);
     };
 
+    const handleCloseBothPoppers = () => {
+        setOpen(false);
+        setDictionaryOpen(false);
+    }
+
+    const handleDictionaryClose = () => {
+        setDictionaryOpen(false);
+    }
+
     const handleMouseUp = (e) => {
         const selection = window.getSelection();
 
@@ -85,7 +97,21 @@ export default function Text(props) {
         handleClose();
     }
 
-    const id = open ? "faked-reference-popper" : undefined;
+    const onDictionaryClicked = () => {
+        const selection = window.getSelection();
+        handleClose();
+    
+        const getBoundingClientRect = () =>
+            selection.getRangeAt(0).getBoundingClientRect();
+    
+        setDictionaryOpen(true);
+        setDictionaryAnchorEl({
+            getBoundingClientRect,
+        });
+    }
+
+    const id = open ? "menu-popper" : undefined;
+    const dictionary_id = dictionaryOpen ? "dictionary-popper" : undefined;
 
     const findChunks = ({
         searchWords,
@@ -138,7 +164,7 @@ export default function Text(props) {
             </Grid>
 
             <Grid item xs className="text-right">
-                <div onMouseLeave={handleClose}>
+                <div onMouseLeave={handleCloseBothPoppers}>
                     <Highlighter
                         searchWords={props.bookmarks.concat(searchWords)}
                         autoEscape={true}
@@ -152,12 +178,20 @@ export default function Text(props) {
                         {({ TransitionProps }) => (
                             <Paper className="paper">
                                 <MenuList className="list" autoFocus>
-                                    <MenuItem onClick={handleClose}>Dictionary</MenuItem>
+                                    <MenuItem onClick={onDictionaryClicked}>Dictionary</MenuItem>
                                     <MenuItem onClick={handleClose}>Sticky Note</MenuItem>
                                     <MenuItem onClick={onBookmarkClicked}>Bookmark</MenuItem>
                                 </MenuList>
                             </Paper>
                         )}
+                    </Popper>
+                    <Popper id={id} open={dictionaryOpen} anchorEl={dictionaryAnchorEl} onMouseLeave={handleDictionaryClose}>
+                        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+                            <h4>Definition:</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <h4>Insights</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                        </Box>
                     </Popper>
                 </div>
             </Grid>
