@@ -185,7 +185,7 @@ export default function Text(props) {
                             </Paper>
                         )}
                     </Popper>
-                    <Popper id={id} open={dictionaryOpen} anchorEl={dictionaryAnchorEl} onMouseLeave={handleDictionaryClose}>
+                    <Popper id={dictionary_id} open={dictionaryOpen} anchorEl={dictionaryAnchorEl} onMouseLeave={handleDictionaryClose}>
                         <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
                             <h4>Definition:</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
