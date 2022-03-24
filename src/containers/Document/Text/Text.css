@@ -1,0 +1,11 @@
+.paper {
+    max-height: "calc(100% - 96px)";
+    position: absolute;
+}
+  /* Styles applied to the `List` component via `MenuList`. */
+.list {
+    outline: 0
+}
+
+.text-right {
+}

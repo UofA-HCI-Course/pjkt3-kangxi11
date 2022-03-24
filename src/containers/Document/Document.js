@@ -6,12 +6,14 @@ import './Document.css';
 import Glossary from './Glossary/Glossary';
 import Summary from './Summary/Summary';
 import Text from './Text/Text';
+import Bookmarks from './Bookmarks/Bookmarks';
 
 export default function Document() {
 
   let navigate = useNavigate();
   
   const [selected, setSelected] = useState("summary");
+  const [bookmarks, setBookmarks] = useState([]);
 
   const onSummaryClicked = () => {
     setSelected("summary");
@@ -72,9 +74,10 @@ export default function Document() {
 
         <Divider style={{ marginBlock: '16px' }} />
 
-        {selected === "text" && <Text />}
+        {selected === "text" && <Text bookmarks={bookmarks} setBookmarks={setBookmarks}/>}
         {selected === "glossary" && <Glossary onClick={onTextClicked} />}
         {selected === "summary" && <Summary />}
+        {selected === "bookmarks" && <Bookmarks onClick={onTextClicked} bookmarks={bookmarks}/>}
       </div>
     </div>
   )

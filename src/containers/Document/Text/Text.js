@@ -1,14 +1,24 @@
 import { HelpOutline } from '@mui/icons-material';
 import { Button, Divider, Typography, Grid, Icon, Tooltip } from '@mui/material';
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import React, {useEffect, useState} from 'react';
 import Highlighter from "react-highlight-words";
 import {book} from './book';
+import './Text.css';
 
-export default function Text() {
+export default function Text(props) {
 
     const [isLiveRead, setIsLiveRead] = useState(false);
     const [text, setText] = useState('');
     const [searchWords, setSearchWords] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [dictionaryOpen, setDictionaryOpen] = useState(false);
+    const [dictionaryAnchorEl, setDictionaryAnchorEl] = useState(null);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -30,6 +40,7 @@ export default function Text() {
                     highlightIndex += 1;
                     updateSearchWords();
                     break
+                default: break;
             }
         });
     }, []);
@@ -49,6 +60,80 @@ export default function Text() {
     const updateSearchWords = () => {
         setSearchWords([wordsArr.slice(0,highlightIndex).join(' ')]);
     }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCloseBothPoppers = () => {
+        setOpen(false);
+        setDictionaryOpen(false);
+    }
+
+    const handleDictionaryClose = () => {
+        setDictionaryOpen(false);
+    }
+
+    const handleMouseUp = (e) => {
+        const selection = window.getSelection();
+
+        // Resets when the selection has a length of 0
+        if (!selection || selection.anchorOffset === selection.focusOffset) {
+            handleClose();
+            return;
+        }
+    
+        const getBoundingClientRect = () =>
+            selection.getRangeAt(0).getBoundingClientRect();
+    
+        setOpen(true);
+        setAnchorEl({
+            getBoundingClientRect,
+        });
+    };
+
+    const onBookmarkClicked = () => {
+        props.setBookmarks(props.bookmarks.concat([window.getSelection().toString()]));
+        handleClose();
+    }
+
+    const onDictionaryClicked = () => {
+        const selection = window.getSelection();
+        handleClose();
+    
+        const getBoundingClientRect = () =>
+            selection.getRangeAt(0).getBoundingClientRect();
+    
+        setDictionaryOpen(true);
+        setDictionaryAnchorEl({
+            getBoundingClientRect,
+        });
+    }
+
+    const id = open ? "menu-popper" : undefined;
+    const dictionary_id = dictionaryOpen ? "dictionary-popper" : undefined;
+
+    const findChunks = ({
+        searchWords,
+        textToHighlight
+    }) => {
+        const chunks = [];
+        const textLow = textToHighlight.toLowerCase();
+        
+        // Add chunks for every searchWord
+        searchWords.forEach(sw => {
+            const swLow = sw.toLowerCase();
+
+            const s = textLow.indexOf(swLow);
+            chunks.push({
+                start: s,
+                end: s + swLow.length,
+                highlight: true
+            });
+        });
+        
+        return chunks;
+    };
 
     return (
 
@@ -78,15 +163,37 @@ export default function Text() {
                 
             </Grid>
 
-            <Grid item xs>
-
-                <Highlighter
-                    searchWords={searchWords}
-                    autoEscape={true}
-                    textToHighlight={text}
-                    highlightStyle={{ whiteSpace: 'pre-wrap' }}
-                    unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
-                />
+            <Grid item xs className="text-right">
+                <div onMouseLeave={handleCloseBothPoppers}>
+                    <Highlighter
+                        searchWords={props.bookmarks.concat(searchWords)}
+                        autoEscape={true}
+                        textToHighlight={text}
+                        highlightStyle={{ whiteSpace: 'pre-wrap' }}
+                        unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
+                        onMouseUp={handleMouseUp}
+                        findChunks={findChunks}
+                    />
+                    <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+                        {({ TransitionProps }) => (
+                            <Paper className="paper">
+                                <MenuList className="list" autoFocus>
+                                    <MenuItem onClick={onDictionaryClicked}>Dictionary</MenuItem>
+                                    <MenuItem onClick={handleClose}>Sticky Note</MenuItem>
+                                    <MenuItem onClick={onBookmarkClicked}>Bookmark</MenuItem>
+                                </MenuList>
+                            </Paper>
+                        )}
+                    </Popper>
+                    <Popper id={dictionary_id} open={dictionaryOpen} anchorEl={dictionaryAnchorEl} onMouseLeave={handleDictionaryClose}>
+                        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+                            <h4>Definition:</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <h4>Insights</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                        </Box>
+                    </Popper>
+                </div>
             </Grid>
 
         </Grid>
