@@ -1,14 +1,22 @@
 import { HelpOutline } from '@mui/icons-material';
 import { Button, Divider, Typography, Grid, Icon, Tooltip } from '@mui/material';
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
 import React, {useEffect, useState} from 'react';
 import Highlighter from "react-highlight-words";
 import {book} from './book';
+import './Text.css';
 
 export default function Text() {
 
     const [isLiveRead, setIsLiveRead] = useState(false);
     const [text, setText] = useState('');
     const [searchWords, setSearchWords] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);  
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -30,6 +38,7 @@ export default function Text() {
                     highlightIndex += 1;
                     updateSearchWords();
                     break
+                default: break;
             }
         });
     }, []);
@@ -49,6 +58,30 @@ export default function Text() {
     const updateSearchWords = () => {
         setSearchWords([wordsArr.slice(0,highlightIndex).join(' ')]);
     }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleMouseUp = (e) => {
+        const selection = window.getSelection();
+
+        // Resets when the selection has a length of 0
+        if (!selection || selection.anchorOffset === selection.focusOffset) {
+            handleClose();
+            return;
+        }
+    
+        const getBoundingClientRect = () =>
+            selection.getRangeAt(0).getBoundingClientRect();
+    
+        setOpen(true);
+        setAnchorEl({
+            getBoundingClientRect,
+        });
+    };
+
+    const id = open ? "faked-reference-popper" : undefined;
 
     return (
 
@@ -78,15 +111,28 @@ export default function Text() {
                 
             </Grid>
 
-            <Grid item xs>
-
-                <Highlighter
-                    searchWords={searchWords}
-                    autoEscape={true}
-                    textToHighlight={text}
-                    highlightStyle={{ whiteSpace: 'pre-wrap' }}
-                    unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
-                />
+            <Grid item xs className="text-right">
+                <div onMouseLeave={handleClose}>
+                    <Highlighter
+                        searchWords={searchWords}
+                        autoEscape={true}
+                        textToHighlight={text}
+                        highlightStyle={{ whiteSpace: 'pre-wrap' }}
+                        unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
+                        onMouseUp={handleMouseUp}
+                    />
+                    <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+                        {({ TransitionProps }) => (
+                            <Paper className="paper">
+                                <MenuList className="list" autoFocus>
+                                    <MenuItem onClick={handleClose}>Dictionary</MenuItem>
+                                    <MenuItem onClick={handleClose}>Sticky Note</MenuItem>
+                                    <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+                                </MenuList>
+                            </Paper>
+                        )}
+                    </Popper>
+                </div>
             </Grid>
 
         </Grid>
