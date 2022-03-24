@@ -4,7 +4,6 @@ import Popper from '@mui/material/Popper';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
 import React, {useEffect, useState} from 'react';
 import Highlighter from "react-highlight-words";
 import {book} from './book';
@@ -16,7 +15,8 @@ export default function Text() {
     const [text, setText] = useState('');
     const [searchWords, setSearchWords] = useState([]);
     const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);  
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [bookmarks, setBookmarks] = useState([]);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -81,7 +81,34 @@ export default function Text() {
         });
     };
 
+    const onBookmarkClicked = () => {
+        setBookmarks(bookmarks.concat([window.getSelection().toString()]));
+        handleClose();
+    }
+
     const id = open ? "faked-reference-popper" : undefined;
+
+    const findChunks = ({
+        searchWords,
+        textToHighlight
+    }) => {
+        const chunks = [];
+        const textLow = textToHighlight.toLowerCase();
+        
+        // Add chunks for every searchWord
+        searchWords.forEach(sw => {
+            const swLow = sw.toLowerCase();
+
+            const s = textLow.indexOf(swLow);
+            chunks.push({
+                start: s,
+                end: s + swLow.length,
+                highlight: true
+            });
+        });
+        
+        return chunks;
+    };
 
     return (
 
@@ -114,12 +141,13 @@ export default function Text() {
             <Grid item xs className="text-right">
                 <div onMouseLeave={handleClose}>
                     <Highlighter
-                        searchWords={searchWords}
+                        searchWords={bookmarks.concat(searchWords)}
                         autoEscape={true}
                         textToHighlight={text}
                         highlightStyle={{ whiteSpace: 'pre-wrap' }}
                         unhighlightStyle={{ whiteSpace: 'pre-wrap' }}
                         onMouseUp={handleMouseUp}
+                        findChunks={findChunks}
                     />
                     <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
                         {({ TransitionProps }) => (
@@ -127,7 +155,7 @@ export default function Text() {
                                 <MenuList className="list" autoFocus>
                                     <MenuItem onClick={handleClose}>Dictionary</MenuItem>
                                     <MenuItem onClick={handleClose}>Sticky Note</MenuItem>
-                                    <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+                                    <MenuItem onClick={onBookmarkClicked}>Bookmark</MenuItem>
                                 </MenuList>
                             </Paper>
                         )}
