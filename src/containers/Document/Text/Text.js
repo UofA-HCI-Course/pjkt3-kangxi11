@@ -276,7 +276,7 @@ export default function Text(props) {
                                 stickyNotes.length === 0 
                                 ? <p>No Sticky Notes</p>
                                 : stickyNotes.map( (d, i) => {
-                                    return (<div>
+                                    return (<div className="sticky-note">
                                         <h4>Sticky Note {i+1}</h4>
                                         <p>{d.text}</p>
                                     </div>);
