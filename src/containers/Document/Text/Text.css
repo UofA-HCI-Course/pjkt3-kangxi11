@@ -11,7 +11,12 @@
 }
 
 .sticky-note {
-  border-bottom: 1px solid
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
+
+.sticky-note p:hover {
+  text-decoration: underline;
 }
 
 .sticky-note-button {

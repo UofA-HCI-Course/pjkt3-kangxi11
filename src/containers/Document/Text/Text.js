@@ -161,6 +161,10 @@ export default function Text(props) {
         setShowAllStickyNotesAnchor(null);
     };    
 
+    const handleStickyNoteClicked = () => {
+        setShowAllStickyNotes(false);
+    }
+
     const id = open ? "menu-popper" : undefined;
     const dictionary_id = dictionaryOpen ? "dictionary-popper" : undefined;
     const sticky_id = stickyNoteOpen ? "sticky-popper" : undefined;
@@ -276,7 +280,7 @@ export default function Text(props) {
                                 stickyNotes.length === 0 
                                 ? <p>No Sticky Notes</p>
                                 : stickyNotes.map( (d, i) => {
-                                    return (<div className="sticky-note">
+                                    return (<div className="sticky-note" onClick={handleStickyNoteClicked}>
                                         <h4>Sticky Note {i+1}</h4>
                                         <p>{d.text}</p>
                                     </div>);
