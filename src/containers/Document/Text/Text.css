@@ -9,3 +9,11 @@
 
 .text-right {
 }
+
+.sticky-note {
+  position: absolute;
+}
+
+.sticky-note-button {
+  margin-top: 2rem !important;
+}
