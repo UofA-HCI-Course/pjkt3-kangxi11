@@ -9,3 +9,16 @@
 
 .text-right {
 }
+
+.sticky-note {
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
+
+.sticky-note p:hover {
+  text-decoration: underline;
+}
+
+.sticky-note-button {
+  margin-top: 2rem !important;
+}

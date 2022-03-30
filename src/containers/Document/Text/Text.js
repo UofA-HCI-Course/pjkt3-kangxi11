@@ -1,8 +1,10 @@
 import { HelpOutline } from '@mui/icons-material';
 import { Button, Divider, Typography, Grid, Icon, Tooltip } from '@mui/material';
 import Popper from '@mui/material/Popper';
+import Popover from '@mui/material/Popover';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import React, {useEffect, useState} from 'react';
@@ -15,10 +17,21 @@ export default function Text(props) {
     const [isLiveRead, setIsLiveRead] = useState(false);
     const [text, setText] = useState('');
     const [searchWords, setSearchWords] = useState([]);
+
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+
     const [dictionaryOpen, setDictionaryOpen] = useState(false);
     const [dictionaryAnchorEl, setDictionaryAnchorEl] = useState(null);
+
+    const [stickyNoteOpen, setStickNoteOpen] = useState(false);
+    const [stickyNotePos, setStickyNotePos] = useState({});
+    const [stickyNoteAnchorEl, setStickNoteAnchorEl] = useState(null);
+
+    let stickyNotesText = "";
+    const [stickyNotes, setStickyNotes] = useState([]);
+    const [showAllStickyNotes, setShowAllStickyNotes] = useState(false);
+    const [showAllStickyNotesAnchor, setShowAllStickyNotesAnchor] = useState(null);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -74,6 +87,10 @@ export default function Text(props) {
         setDictionaryOpen(false);
     }
 
+    const handleStickyNoteClose = () => {
+        setStickNoteOpen(false);
+    }
+
     const handleMouseUp = (e) => {
         const selection = window.getSelection();
 
@@ -110,8 +127,51 @@ export default function Text(props) {
         });
     }
 
+    const onStickyNoteClicked = () => {
+        const selection = window.getSelection();
+        handleClose();
+        const getBoundingClientRect = () =>
+            selection.getRangeAt(0).getBoundingClientRect();
+
+        setStickNoteOpen(true);
+        setStickNoteAnchorEl({
+            getBoundingClientRect,
+        });
+        setStickyNotePos(selection);
+    }
+
+    const stickyNoteTextChanged = (e) => {
+        stickyNotesText = e.target.value;
+    }
+
+    const onStickyNoteSaveClicked = () => {
+        setStickyNotes(stickyNotes.concat([{
+            text: stickyNotesText,
+        }]));
+
+        handleStickyNoteClose();
+    }
+
+    const handleStickyNoteToggle = (e) => {
+        setShowAllStickyNotes(!showAllStickyNotes);
+        setShowAllStickyNotesAnchor(e.currentTarget);
+    }
+
+    const handleAllStickyNoteClose = () => {
+        setShowAllStickyNotesAnchor(null);
+    };    
+
+    const handleStickyNoteClicked = () => {
+        setShowAllStickyNotes(false);
+    }
+
     const id = open ? "menu-popper" : undefined;
     const dictionary_id = dictionaryOpen ? "dictionary-popper" : undefined;
+    const sticky_id = stickyNoteOpen ? "sticky-popper" : undefined;
+
+    const allStickyNotesOpen = Boolean(showAllStickyNotes);
+    const all_stick_id = allStickyNotesOpen ? 'all-sticky-popover' : undefined;
+  
 
     const findChunks = ({
         searchWords,
@@ -139,8 +199,6 @@ export default function Text(props) {
 
         <Grid container direction="column" spacing={2}>
             <Grid item xs={1}>
-
-
                 <Grid container direction="row" alignItems="center" spacing={1}>
                     <Grid item>
                         <Button variant="contained" color="primary" onClick={() => {
@@ -160,7 +218,7 @@ export default function Text(props) {
                         </Tooltip>
                     </Grid>
                 </Grid>
-                
+                <Button className="sticky-note-button" variant="contained" onClick={handleStickyNoteToggle}>Toggle Sticky Notes</Button>
             </Grid>
 
             <Grid item xs className="text-right">
@@ -179,7 +237,7 @@ export default function Text(props) {
                             <Paper className="paper">
                                 <MenuList className="list" autoFocus>
                                     <MenuItem onClick={onDictionaryClicked}>Dictionary</MenuItem>
-                                    <MenuItem onClick={handleClose}>Sticky Note</MenuItem>
+                                    <MenuItem onClick={onStickyNoteClicked}>Sticky Note</MenuItem>
                                     <MenuItem onClick={onBookmarkClicked}>Bookmark</MenuItem>
                                 </MenuList>
                             </Paper>
@@ -191,6 +249,43 @@ export default function Text(props) {
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                             <h4>Insights</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                        </Box>
+                    </Popper>
+                    <Popper id={sticky_id} open={stickyNoteOpen} anchorEl={stickyNoteAnchorEl} onMouseLeave={handleStickyNoteClose}>
+                        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+                            <TextField
+                                id="standard-multiline-static"
+                                label="Sticky Note"
+                                multiline
+                                rows={4}
+                                variant="standard"
+                                onChange={stickyNoteTextChanged}
+                            />
+                            <br></br>
+                            <Button variant="contained" size="small" onClick={onStickyNoteSaveClicked}>Save</Button>
+                        </Box>
+                    </Popper>
+                    <Popper
+                        id={all_stick_id}
+                        open={allStickyNotesOpen}
+                        anchorEl={showAllStickyNotesAnchor}
+                        onClose={handleAllStickyNoteClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+                            {
+                                stickyNotes.length === 0 
+                                ? <p>No Sticky Notes</p>
+                                : stickyNotes.map( (d, i) => {
+                                    return (<div className="sticky-note" onClick={handleStickyNoteClicked}>
+                                        <h4>Sticky Note {i+1}</h4>
+                                        <p>{d.text}</p>
+                                    </div>);
+                                })
+                            }
                         </Box>
                     </Popper>
                 </div>
