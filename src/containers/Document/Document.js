@@ -12,7 +12,7 @@ export default function Document() {
 
   let navigate = useNavigate();
   
-  const [selected, setSelected] = useState("summary");
+  const [selected, setSelected] = useState("text");
   const [bookmarks, setBookmarks] = useState([]);
 
   const onSummaryClicked = () => {

@@ -14,6 +14,12 @@ import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
+import AlertTitle from '@mui/material/AlertTitle';
 
 import * as go from 'gojs';
 import { ReactDiagram } from 'gojs-react';
@@ -42,6 +48,7 @@ export default function Home() {
     { key: -5, from: 3, to: 5, text: 'Crime is explained by supernatural forces' },
     { key: -6, from: 3, to: 2, text: 'Social stigmas create widespread fear' },
   ]);
+  const [open, setOpen] = React.useState(true);
 
   const onDocumentsClicked = () => {
     setSelected("documents");
@@ -233,21 +240,42 @@ export default function Home() {
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
+                        tooltipOpen
                         onClick={onRowClicked}
                       />
                     ))}
                   </SpeedDial>
                 </div>
             : <div>
-                <p>
-                  Click and drag nodes to move
-                </p>
-                <p>
-                  Click and drag from the edge of a node to another node to create a new link
-                </p>
-                <p>
-                  Double click a link's text to modify
-                </p>
+                <Collapse in={open}>
+                  <Alert
+                    severity="info"
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <AlertTitle>Tip</AlertTitle>
+                    <p>
+                      Click and drag nodes to move
+                    </p>
+                    <p>
+                      Click and drag from the edge of a node to another node to create a new link
+                    </p>
+                    <p>
+                      Double click a link's text to modify
+                    </p>
+                  </Alert>
+                </Collapse>
                 <ReactDiagram
                   initDiagram={initDiagram}
                   divClassName='diagram-component'
