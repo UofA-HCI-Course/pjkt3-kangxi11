@@ -6,7 +6,10 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuList from '@mui/material/MenuList';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import MenuItem from '@mui/material/MenuItem';
+import Collapse from '@mui/material/Collapse';
 import React, {useEffect, useState} from 'react';
 import Highlighter from "react-highlight-words";
 import {book} from './book';
@@ -32,6 +35,8 @@ export default function Text(props) {
     const [stickyNotes, setStickyNotes] = useState([]);
     const [showAllStickyNotes, setShowAllStickyNotes] = useState(false);
     const [showAllStickyNotesAnchor, setShowAllStickyNotesAnchor] = useState(null);
+
+    const [showTooltip, setShowTooltip] = useState(true);
 
     var highlightIndex = 0;
     var wordsArr = [];
@@ -195,6 +200,10 @@ export default function Text(props) {
         return chunks;
     };
 
+    const closeTooltip = () => {
+        setShowTooltip(false);
+    }
+
     return (
 
         <Grid container direction="column" spacing={2}>
@@ -219,6 +228,12 @@ export default function Text(props) {
                     </Grid>
                 </Grid>
                 <Button className="sticky-note-button" variant="contained" onClick={handleStickyNoteToggle}>Toggle Sticky Notes</Button>
+                <Collapse in={showTooltip}>
+                    <Alert className="sticky-note-button" severity="info" onClose={closeTooltip}>
+                        <AlertTitle>Tip</AlertTitle>
+                        Highligh text to access Dictionary, Sticky Notes, and Bookmarks
+                    </Alert>
+                </Collapse>
             </Grid>
 
             <Grid item xs className="text-right">
