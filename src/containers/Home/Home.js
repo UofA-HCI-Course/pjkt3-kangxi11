@@ -233,6 +233,7 @@ export default function Home() {
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
+                        tooltipOpen
                         onClick={onRowClicked}
                       />
                     ))}
