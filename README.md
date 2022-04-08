@@ -6,10 +6,15 @@ Matt Asgari Motlagh (masgarim)
 
 ## Available Scripts
 
+
 In the project directory, you can run:
 
-## `npm run deploy`
+### `npm run deploy`
 Will deploy React App to Github Pages.
+
+
+### `npm install`
+Install all packages. Make sure to run before `npm start`
 
 
 ### `npm start`
